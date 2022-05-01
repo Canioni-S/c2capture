@@ -1,0 +1,119 @@
+.pageContainer {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 1em;
+    font-family: 'glow';
+    width: 100vw;
+    min-height: 80vh;
+}
+.page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+    width: 80%;
+}
+.titleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: whitesmoke;
+    background-color: rgba(44, 91, 84, 0.5);
+    padding: 1em 0;
+    width: 100%;
+}
+.descriptionContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    color: var(--main-darkGreen-color);
+    font-size: 1.2em;
+}
+.descriptionContainer p {
+    width: 90%;
+    padding: 1em 0;
+}
+.contentContainer {
+    width: 100%;
+    background-color: aqua;
+}
+.allCardContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1em;
+}
+.card {
+    border: 2px solid var(--main-darkGreen-color);
+    padding: 0.2em;
+}
+.imgContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    max-width: 450px;
+    min-height: 220px;
+    max-height: 270px;
+    overflow: hidden;
+}
+.img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 100%;
+}
+
+.imgTitle {
+    position: absolute;
+    bottom: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.3em 0;
+    background-color: rgba(44, 91, 84, 0.6);
+    font-family: 'glow';
+    color: whitesmoke;
+}
+.overlay {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    transition: opacity .3s;
+    z-index: 99;
+}
+.overlay img {
+    max-width: 90%;
+    max-height: 98%;
+    width: auto;
+    height: auto;
+    transform: scale(0.95);
+    transition: transform .3s;
+}
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+    outline: none;
+    cursor: default;
+}
+.overlay:target img {
+    transform: scale(1);
+}
