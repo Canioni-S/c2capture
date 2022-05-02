@@ -4,7 +4,6 @@ require_once "./Functions/adminFunction.php";
 adminOnly();
 
 $id_coll = htmlentities($_GET['id']);
-var_dump($id_coll);
 
 require_once "./Include/pdo.php";
 $pdo = getPDO();

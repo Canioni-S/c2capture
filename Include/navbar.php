@@ -25,7 +25,7 @@ $navCollections = getAllCollections();
 <body>
     <!-- NAVBAR -->
     <div id="goTop" class="navLogoContainer">
-        <a id="navLogo" class="navLogo" href="../home.php"><img class="navLogoImg" src="/Assets/pictures/logoDark.png" alt="Logo kla photographie"></a>
+        <a id="navLogo" class="navLogo" href="/home.php"><img class="navLogoImg" src="/Assets/pictures/logoDark.png" alt="Logo kla photographie"></a>
     </div>
     <div class="navbarContainer">
         <hr>

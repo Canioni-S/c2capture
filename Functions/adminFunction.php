@@ -55,6 +55,16 @@ function getFirstGallbyColl($id_coll)
     return $req;
 }
 
+function getPicture($id_pic)
+{
+    $pdo = getPDO();
+    $req = $pdo->query("SELECT * FROM PICTURES WHERE id_pic = $id_pic")->fetch();
+    // $req = $pdo->prepare("SELECT * FROM PICTURES WHERE id_pic = ?");
+    // $req->execute([$id_pic]);
+    // $req->fetch();
+    return $req;
+}
+
 function getAllPicByGall($id_gall)
 {
     $pdo = getPDO();
@@ -68,4 +78,3 @@ function getFirstPicByGall($id_gall)
     $req = $pdo->query("SELECT * FROM PICTURES WHERE id_gall = $id_gall ORDER BY added_at DESC LIMIT 1")->fetch();
     return $req;
 }
-

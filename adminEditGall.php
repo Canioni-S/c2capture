@@ -5,10 +5,8 @@ adminOnly();
 
 // FETCH THE CONTENT OF A GALERY (PICTURES) TO USE THE GALERY'S INFORMATIONS IN THE VIEW
 $id_gall = htmlentities($_GET['id']);
+$gallery = getGallery($id_gall);
 
-if (!empty($id_gall)) {
- $gallery = getGallery($id_gall);
-}
 
 // PROCESS THE POST VALUE RECEIVED AND UPDATE THE CORRESPONDING TABLE GALLERIES OCCURENCE
 if (!empty($_POST)) {

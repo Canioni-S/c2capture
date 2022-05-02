@@ -29,7 +29,7 @@
     src: url(/Assets/font/Afterglow-Regular.ttf);
 }
 
-@font-face {
+/* @font-face {
     font-family: "arsenik";
     src: url(/Assets/font/ArsenicaTrial-Regular.ttf);
 }
@@ -42,7 +42,7 @@
 @font-face {
     font-family: "arsenik-demibold";
     src: url(/Assets/font/ArsenicaTrial-Demibold.ttf);
-}
+} */
 
 /* GENERAL STYLES */
 * {
