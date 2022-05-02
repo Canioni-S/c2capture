@@ -7,7 +7,6 @@ adminOnly();
 $id_pic = htmlentities($_GET['id_pic']);
 $id_gall = htmlentities($_GET['id_gall']);
 $picture = getPicture($id_pic);
-var_dump($_GET);
 
 // PROCESS THE POST VALUE RECEIVED AND UPDATE THE CORRESPONDING TABLE PICTURES OCCURENCE
 if (!empty($_POST)) {

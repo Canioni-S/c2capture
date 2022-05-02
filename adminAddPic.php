@@ -5,7 +5,6 @@ adminOnly();
 
 // FETCH THE CONTENT OF A COLLECTION TO ADD IN THE RIGHT TABLE
 $gallery = getGallery(htmlentities($_GET['id']));
-// PEUT ETRE RECUPERER UNIQUEMENT L'ID
 
 // FETCH THE CONTENT OF A GALLERY (PICTURES) TO USE THE GALERY'S INFORMATIONS IN THE VIEW
 $pictures = getAllPicByGall($gallery[0]);
