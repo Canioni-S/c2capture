@@ -75,30 +75,41 @@ $extraCss = "admin";
 
     <?php if (!empty($pictures)) : ?>
         <div class="contentCollPreview">
+
             <h1>Aperçu de la collection :</h1>
+
             <div class="allCardContainer">
+
                 <?php foreach ($pictures as $picture) : ?>
                     <div class="card">
+
                         <div class="imgContainer">
                             <img class="img" src="<?= $picture[3]; ?>" alt="<?= $picture[2]; ?>">
                         </div>
+
                         <div class="spanGrp">
                             <span class="imgTitle"><?= $picture[2] ?></span>
                             <div class="adminBtnGrp">
+
                                 <button class="adminBtn edit">
                                     <a class="adminLink" href='./adminEditPic.php?id_pic=<?= $picture[0] ?>&id_gall=<?= $gallery[0] ?>'><i class="icon bi bi-pencil"></i></a>
                                 </button>
+
                                 <button class="adminBtn delete" onclick="return confirm('Voulez vous vraiment supprimer cette photo ?')">
                                     <a class="adminLink" href='./adminDeletePic.php?id_pic=<?= $picture[0] ?>&id_gall=<?= $gallery[0] ?>'><i class="icon deletee bi bi-trash"></i></a>
                                 </button>
+                                
                             </div>
                         </div>
+
                     </div>
                 <?php endforeach; ?>
+
             </div>
+
         </div>
     <?php endif ?>
-</div>
 
+</div>
 
 <?php require './Include/footer.php'; ?>

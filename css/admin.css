@@ -31,7 +31,7 @@
     width: 70%;
 }
 
-.goBackAdminPanel{
+.goBackAdminPanel {
     display: flex;
 }
 
@@ -71,6 +71,7 @@
     justify-content: center;
     gap: 10px;
 }
+
 .adminItemView.BtnView {
     width: 10%;
 }
@@ -189,7 +190,11 @@
     background-color: var(--main-lightGreen-color);
 }
 
-.imgTitle{
+.imgTitle {
     font-family: 'glow';
     color: whitesmoke;
+}
+
+.adminBtnGrp {
+    display: flex;
 }
