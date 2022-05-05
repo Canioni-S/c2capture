@@ -1,6 +1,8 @@
 <?php
 require_once './Functions/registrationFunction.php';
 require_once './Functions/generalFunction.php';
+require_once "./Include/myAutoloader.php";
+
 
 reconnect_from_cookie();
 

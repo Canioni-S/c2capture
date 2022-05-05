@@ -1,12 +1,3 @@
-<?php if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-require_once './Include/pdo.php';
-require_once "./Functions/adminFunction.php";
-// GET ALL COLLECTIONS
-$navCollections = getAllCollections();
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -38,9 +29,12 @@ $navCollections = getAllCollections();
             </div>
 
             <div class="navDropdown">
-                <button onclick="iconRotate()"  id="navDropBtn" class="accordion navDropBtn">Les Collections<i id="iconRotate" class="bi bi-caret-right-fill"></i></button>
+                <button onclick="iconRotate()" id="navDropBtn" class="accordion navDropBtn">Les Collections<i id="iconRotate" class="bi bi-caret-right-fill"></i></button>
                 <div id="dropContent" class="navDropdownContent">
-                    <?php foreach ($navCollections as $navCollection) : ?>
+                    <?php
+                    require_once "./Functions/adminFunction.php";
+                    $navCollections = getAllCollections(); 
+                    foreach ($navCollections as $navCollection) : ?>
                         <div class="navCatContainer">
                             <button class="accordion navCatBtn">Collection '<?= $navCollection[1]; ?>'</button>
                             <div class="panel">
@@ -77,12 +71,11 @@ $navCollections = getAllCollections();
     </div>
 
     <div class="alertMsgBox">
-        <?php if (isset($_SESSION['flash'])) : ?>
-            <?php foreach ($_SESSION['flash'] as $type => $message) : ?>
+        <?php if (Session::getInstance()->hasFlashes()) : ?>
+            <?php foreach (Session::getInstance()->getFlashes() as $type => $message) : ?>
                 <div class="alert alert-<?= $type; ?>">
                     <?= $message; ?>
                 </div>
             <?php endforeach; ?>
-            <?php unset($_SESSION['flash']); ?>
         <?php endif; ?>
     </div>
