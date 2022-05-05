@@ -1,12 +1,18 @@
 <?php
-require_once "./Functions/generalFunction.php";
-session_start();
+
+require_once "./Include/myAutoloader.php";
+
+// require_once "./Functions/generalFunction.php";
+// session_start();
+
 if (!empty($_POST)) {
 
     $errors = array();
 
-    require_once "./Include/pdo.php";
-    $pdo = getPDO();
+    $db = App::getDB();
+
+    // require_once "./Include/pdo.php";
+    // $pdo = getPDO();
 
     $username = htmlentities($_POST['username']);
     $email = htmlentities($_POST['email']);
@@ -14,9 +20,7 @@ if (!empty($_POST)) {
     if (empty($_POST['username']) || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST['username'])) {
         $errors['username'] = "Votre pseudo n'est pas valide (alphanumérique)";
     } else {
-        $req = $pdo->prepare('SELECT id_user FROM USERS WHERE username = ?');
-        $req->execute([$_POST['username']]);
-        $user = $req->fetch();
+        $user = $db->queryReq("SELECT id_user FROM USERS WHERE username = ?", [$_POST['username']])->fetch();
         if ($user) {
             $errors['username'] = 'Ce pseudo est déjà pris';
         }
@@ -25,9 +29,7 @@ if (!empty($_POST)) {
     if (empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = "Votre email n'est pas valide";
     } else {
-        $req = $pdo->prepare('SELECT id_user FROM USERS WHERE email = ?');
-        $req->execute([$_POST['email']]);
-        $user = $req->fetch();
+        $user = $db->queryReq("SELECT id_user FROM USERS WHERE email = ?", [$_POST['email']])->fetch();
         if ($user) {
             $errors['email'] = 'Cet email est déjà utilisé pour un autre compte';
         }
@@ -39,11 +41,12 @@ if (!empty($_POST)) {
 
     if (empty($errors)) {
 
-        $req = $pdo->prepare("INSERT INTO USERS SET username = ?, password = ?, email = ?, role = 'visiteur', confirmation_token = ?");
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $token = str_random(60);
-        $req->execute([$_POST['username'], $password, $_POST['email'], $token]);
-        $user_id = $pdo->lastInsertId();
+        $req = $db->queryReq("INSERT INTO USERS SET username = ?, password = ?, email = ?, role = 'visiteur', confirmation_token = ?", [
+            [$_POST['username'], $password, $_POST['email'], $token]
+        ]);
+        $user_id = $db->lastInsertId();
 
         // TEST CODE WITHOUT SENDING THE EMAIL
         // $linkValidation = "http://klaphoto1/confirm.php?id=$user_id&token=$token";
