@@ -19,7 +19,7 @@ class Validator
         return $this->data[$field];
     }
 
-    public function isAlphaNum($field, $errorMsg){
+    public function isAlphaNum($field, $errorMsg = false){
         if(!preg_match('/^[a-zA-Z0-9_]+$/', $this->getField($field))){
             $this->errors[$field] = $errorMsg;
         }
@@ -41,7 +41,7 @@ class Validator
         return true;
     }
 
-    public function isConfirmed($field, $errorMsg){
+    public function isConfirmed($field, $errorMsg = false){
         $value = $this->getField($field);
         if(empty($value) || $value != $this->getField($field . '_confirm')){
             $this->errors[$field] = $errorMsg;

@@ -1,42 +1,27 @@
 <?php
-require_once './Functions/registrationFunction.php';
-require_once './Functions/generalFunction.php';
 require_once "./Include/myAutoloader.php";
+$auth = App::getAuth();
+$db = App::getDB();
+$auth->connectFromCookie($db);
 
 
-reconnect_from_cookie();
-
-if (isset($_SESSION['auth'])) {
-    header('Location: account.php');
-    exit();
+if ($auth->user()) {
+    App::redirect("account.php");
 }
 
 if (!empty($_POST) && !empty($_POST['username']) && !empty($_POST['password'])) {
-    
-    require_once "./Include/pdo.php";
+    $user = $auth->login($db, $_POST['username'], $_POST['password'], isset($_POST['remember']));
+    $session = Session::getInstance();
 
-    $pdo = getPDO();
-    $req = $pdo->prepare('SELECT * FROM USERS WHERE (username = :username OR email = :username) AND confirmed_at IS NOT NULL');
-    $req->execute(['username' => $_POST['username']]);
-    $user = $req->fetch();
-
-    if (password_verify($_POST['password'], $user['PASSWORD'])) {
-        $_SESSION['auth'] = $user;
-        $_SESSION['flash']['success'] = 'Vous êtes maintenant connecté';
-        if ($_POST['remember']) {
-            $remember_token = str_random(250);
-            $pdo->prepare('UPDATE USERS SET remember_token = ? WHERE id_user = ?')->execute([$remember_token, $user['ID_USER']]);
-            setcookie('remember', $user['ID_USER'] . '==' . $remember_token . sha1($user['ID_USER'] . 'ratonlaveurs'), time() + 60 * 60 * 24 * 7);
-        }
+    if ($user) {
+        $session->setFlash("success", "Vous êtes maintenant connecté");
         if ($_SESSION['auth']['ROLE'] == 'admin') {
-            header('Location: adminPanel.php');
-            exit();
+            App::redirect("adminPanel.php");
         } else {
-            header('Location: account.php');
-            exit();
+            App::redirect("account.php");
         }
     } else {
-        $_SESSION['flash']['danger'] = 'Identifiant ou mot de passe incorrecte';
+        $session->setFlash("danger", "Identifiant ou mot de passe incorrecte");
     }
 }
 

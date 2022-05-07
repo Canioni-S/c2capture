@@ -1,7 +1,7 @@
 <?php
 require './Functions/registrationFunction.php';
-// PAGE RESTRICTED ADMIN ONLY
-logged_only();
+require_once "./Include/myAutoloader.php";
+App::getAuth()->restrict();
 
 // PROCESS FORM POST AND CHANGE PASSWORD
 if (!empty($_POST)) {

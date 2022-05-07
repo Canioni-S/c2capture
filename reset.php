@@ -1,31 +1,27 @@
 <?php
+require_once "./Include/myAutoloader.php";
 if (isset($_GET['id']) && isset($_GET['token'])) {
-    require_once './Include/pdo.php';
-    $pdo = getPDO();
-    $req = $pdo->prepare('SELECT * FROM USERS WHERE id_user = ? AND reset_token IS NOT NULL AND reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
-    $req->execute([$_GET['id'], $_GET['token']]);
-    $user = $req->fetch();
+    $auth = App::getAuth();
+    $db = App::getDB();
+    $user = $auth->checkResetToken($db, $_GET['id'], $_GET['token']);
     if ($user) {
         if (!empty($_POST)) {
-            if (!empty($_POST['password']) && $_POST['password'] == $_POST['password_confirm']) {
+            $validator = new Validator($_POST);
+            $validator->isConfirmed("password");
+            if ($validator->isValid()) {
                 $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-                $pdo->prepare('UPDATE USERS SET password = ?, reset_at = NULL, reset_token = NULL WHERE id_user = ?')->execute([$password, $_GET['id']]);
-                session_start();
-                $_SESSION['flash']['success'] = 'Votre mot de passe a bien été modifié';
-                $_SESSION['auth'] = $user;
-                header('Location: account.php');
-                exit();
+                $db->queryReq("UPDATE USERS SET password = ?, reset_at = NULL, reset_token = NULL WHERE id_user = ?", [$password, $_GET['id']]);
+                Session::getInstance()->setFlash('success', "Votre mot de passe a bien été modifié");
+                $auth->connect($user);
+                App::redirect("account.php");
             }
         }
     } else {
-        session_start();
-        $_SESSION['flash']['error'] = "Ce token n'est pas valide";
-        header('Location: login.php');
-        exit();
+        Session::getInstance()->setFlash('danger', "Ce token n'est pas valide");
+        App::redirect("login.php");
     }
 } else {
-    header('Location: login.php');
-    exit();
+    App::redirect("login.php");
 }
 ?>
 
@@ -42,7 +38,7 @@ $extraCss = 'form';
     <h1>Réinitialiser mon mot de passe</h1>
 
     <form class="form" action="" method="POST">
-        
+
         <div class="formItem">
             <label class="formItem" for="">Mot de passe</label>
             <input type="password" name="password" class="formInput" />
