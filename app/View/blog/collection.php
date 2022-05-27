@@ -17,7 +17,7 @@ $collection = App::getInstance()->getTable('COLLECTIONS')->findOne(htmlentities(
         $picture = App::getInstance()->getTable('PICTURES')->findFirstPic($gallery->ID_GALL);
         ?>
 
-        <a class="collectionContainer" href="./gallery.php?id=<?= $gallery->ID_GALL;?>">
+        <a class="collectionContainer" href="index.php?p=gallery&id=<?= $gallery->ID_GALL;?>">
             <img class="imgCollection" src="<?= $picture->LINK_PIC; ?>" alt="<?= $picture->NAME_PIC; ?>">
             <p class="nameCollection">Galerie : '<?= $gallery->NAME_GALL; ?>'</p>
         </a>

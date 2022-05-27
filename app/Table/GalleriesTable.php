@@ -14,8 +14,9 @@ class GalleriesTable extends Table
     {
         return $this->queryReq("SELECT * FROM GALLERIES WHERE ID_COLL = ? ORDER BY NAME_GALL", [$id_coll]);
     }
+
+    public function findOneGall($id_gall)
+    {
+        return $this->queryReq("SELECT * FROM GALLERIES WHERE ID_GALL = ? ", [$id_gall], true);
+    }
 }
-// public static function findOneGall($id_gall)
-// {
-//     return App::getDB()->prepareReq("SELECT * FROM GALLERIES WHERE ID_GALL = ? ", [$id], get_called_class(), true);
-// }

@@ -14,11 +14,16 @@ if (isset($_GET['p'])) {
 }
 
 ob_start();
+// BLOG
 if ($page === 'home') {
-    require ROOT . "/app/View/home.php";
+    require ROOT . "/app/View/blog/home.php";
 } elseif ($page === 'collection') {
-    require ROOT . "/app/View/collection.php";
-} elseif ($page === 'prestation') {
+    require ROOT . "/app/View/blog/collection.php";
+} elseif ($page === 'gallery') {
+    require ROOT . "/app/View/blog/gallery.php";
+}
+// PERSONAL INFOS
+elseif ($page === 'prestation') {
     require ROOT . "/app/View/prestation.php";
 } elseif ($page === 'aboutMe') {
     require ROOT . "/app/View/aboutMe.php";
