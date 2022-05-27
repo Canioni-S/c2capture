@@ -50,7 +50,7 @@ $extraCss = "form";
             </div>
 
             <div class="formItem">
-                <label for="password">Entrez votre Mot de passe <br><a href="forget.php">(J'ai oublié mon mot de passe)</a></label>
+                <label for="password">Entrez votre Mot de passe <br><a href="index.php?p=forget">(J'ai oublié mon mot de passe)</a></label>
                 <input type="password" name="password" class="formInput" required>
             </div>
 
@@ -60,7 +60,7 @@ $extraCss = "form";
                     <input type="checkbox" name="remember" value="1" /> Se souvenir de moi
                 </label>
             </div>
-            <a href="./register.php">Je n'ai pas de compte</a>
+            <a href="index.php?p=register">Je n'ai pas de compte</a>
 
         </form>
     </div>

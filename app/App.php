@@ -24,6 +24,11 @@ class App
         return Session::getInstance();
     }
 
+    public static function getAuth()
+    {
+        return new DBAuth(Session::getInstance(), ["restriction_msg" => "Tu es bloqué !"]);
+    }
+
     public static function redirect($page)
     {
         header("Location: $page");
@@ -32,7 +37,7 @@ class App
 
     public function getTable($name)
     {
-        $class_name = "\\App\\Table\\" . ucfirst($name) . "Table";
+        $class_name = "\\App\\Table\\" . ucfirst(strtolower($name)) . "Table";
         return new $class_name($this->getDB());
     }
 
@@ -54,13 +59,4 @@ class App
         header("HTTP/1.0 404 Not Found");
         die("Page introuvable");
     }
-
-    
-
-    static function getAuth()
-    {
-        return new DBAuth(Session::getInstance(), ["restriction_msg" => "Tu es bloqué !"]);
-    }
-
-
 }

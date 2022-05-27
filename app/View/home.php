@@ -14,9 +14,9 @@ $extraCss = "home";
 
     <?php
 
-    foreach (App::getInstance()->getTable('COLLECTIONS')->findAll() as $collection) :
-        $gallery = App::getInstance()->getTable('GALLERIES')->findFirstGall($collection->ID_COLL);
-        $picture = App::getInstance()->getTable('PICTURES')->findFirstPic($gallery->ID_GALL);
+    foreach (App::getInstance()->getTable('Collections')->findAll() as $collection) :
+        $gallery = App::getInstance()->getTable('Galleries')->findFirstGall($collection->ID_COLL);
+        $picture = App::getInstance()->getTable('Pictures')->findFirstPic($gallery->ID_GALL);
     ?>
 
         <a class="collectionContainer" href="<?= $collection->getUrl() ?>">

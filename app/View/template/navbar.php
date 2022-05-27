@@ -5,7 +5,7 @@ use App\App;
 ?>
 
 <div id="goTop" class="navLogoContainer">
-    <a id="navLogo" class="navLogo" href="index.php?p=home"><img class="navLogoImg" src="../../../public/asset/pictures/logoDark.png" alt="Logo kla photographie"></a>
+    <a id="navLogo" class="navLogo" href="index.php?p=home"><img class="navLogoImg" src="/asset/pictures/logoDark.png" alt="Logo kla photographie"></a>
 </div>
 <div class="navbarContainer">
     <hr>

@@ -23,40 +23,40 @@ class DBAuth
         }
     }
 
-    // public function register($db, $username, $password, $email)
-    // {
-    //     $password = password_hash($password, PASSWORD_BCRYPT);
-    //     $token = Str::random(60);
-    //     $db->queryReq("INSERT INTO USERS SET username = ?, password = ?, email = ?, role = 'visiteur', confirmation_token = ?", [
-    //         $username, $password, $email, $token
-    //     ]);
-    //     $user_id = $this->db->lastInsertId();
+    public function register($db, $username, $password, $email)
+    {
+        $password = password_hash($password, PASSWORD_BCRYPT);
+        $token = Str::random(60);
+        $db->prepareReq("INSERT INTO USERS SET username = ?, password = ?, email = ?, role = 'visiteur', confirmation_token = ?", [
+            $username, $password, $email, $token
+        ]);
+        $user_id = $db->lastInsertId();
 
-    //     //SEND THE VERIFICATION BY EMAIL
-    //     $to = $_POST['email'];
-    //     $subject = "Confirmation de votre compte";
-    //     $message = "<html>
-    //                   <h2>Merci d'avoir créer un compte</h2><br>
-    //                   <p>Afin de valider votre compte merci de cliquer sur ce lien</p><br>
-    //                   <a href='http://c2p.alwaysdata.net/confirm.php?id=$user_id&token=$token'>Confirmez votre compte</a><br>
-    //                 </html>";
-    //     $headers[] = 'MIME-Version: 1.0';
-    //     $headers[] = 'Content-type: text/html; charset=utf-8';
-    //     $headers[] = 'From: c2p.alwaysdata@gmail.com';
-    //     mail($to, $subject, $message, implode("\r\n", $headers));
-    // }
+        //SEND THE VERIFICATION BY EMAIL
+        $to = $email;
+        $subject = "Confirmation de votre compte";
+        $message = "<html>
+                      <h2>Merci d'avoir créer un compte</h2><br>
+                      <p>Afin de valider votre compte merci de cliquer sur ce lien</p><br>
+                      <a href='http://c2p.alwaysdata.net/index.php?p=confirm?id=$user_id&token=$token'>Confirmez votre compte</a><br>
+                    </html>";
+        $headers[] = 'MIME-Version: 1.0';
+        $headers[] = 'Content-type: text/html; charset=utf-8';
+        $headers[] = 'From: c2p.alwaysdata@gmail.com';
+        mail($to, $subject, $message, implode("\r\n", $headers));
+    }
 
-    // public function confirm($db, $user_id, $token)
-    // {
-    //     $user = $this->db->queryReq("SELECT * FROM USERS WHERE id_user = ?", [$user_id])->fetch();
+    public function confirm($db, $user_id, $token)
+    {
+        $user = $this->db->queryReq("SELECT * FROM USERS WHERE id_user = ?", [$user_id])->fetch();
 
-    //     if ($user && $user['CONFIRMATION_TOKEN'] == $token) {
-    //         $db->queryReq("UPDATE USERS SET CONFIRMATION_TOKEN = NULL, confirmed_at = NOW() WHERE id_user = ?", [$user_id]);
-    //         $this->session->write('auth', $user);
-    //         return true;
-    //     }
-    //     return false;
-    // }
+        if ($user && $user['CONFIRMATION_TOKEN'] == $token) {
+            $db->queryReq("UPDATE USERS SET CONFIRMATION_TOKEN = NULL, confirmed_at = NOW() WHERE id_user = ?", [$user_id]);
+            $this->session->write('auth', $user);
+            return true;
+        }
+        return false;
+    }
 
     public function restrict()
     {
@@ -68,40 +68,40 @@ class DBAuth
     }
 
 
-    // public function user()
-    // {
-    //     if (!$this->session->read('auth')) {
-    //         return false;
-    //     }
-    //     return $this->session->read('auth');
-    // }
+    public function user()
+    {
+        if (!$this->session->read('auth')) {
+            return false;
+        }
+        return $this->session->read('auth');
+    }
 
     public function connect($user)
     {
         $this->session->write('auth', $user);
     }
 
-    // public function connectFromCookie($db)
-    // {
+    public function connectFromCookie($db)
+    {
 
-    //     if (isset($_COOKIE['remember']) && !$this->user()) {
-    //         $remember_token = $_COOKIE['remember'];
-    //         $parts = explode('==', $remember_token);
-    //         $user_id = $parts[0];
-    //         $user = $db->queryReq("SELECT * FROM USERS WHERE id_user = ?", [$user_id])->fetch();
-    //         if ($user) {
-    //             $expected = $user_id . '==' . $user['remember_token'] . sha1($user_id . 'ratonlaveurs');
-    //             if ($expected == $remember_token) {
-    //                 $this->connect($user);
-    //                 setcookie('remember', $remember_token, time() + 60 * 60 * 24 * 7);
-    //             } else {
-    //                 setcookie('remember', null, -1);
-    //             }
-    //         } else {
-    //             setcookie('remember', null, -1);
-    //         }
-    //     }
-    // }
+        if (isset($_COOKIE['remember']) && !$this->user()) {
+            $remember_token = $_COOKIE['remember'];
+            $parts = explode('==', $remember_token);
+            $user_id = $parts[0];
+            $user = $db->queryReq("SELECT * FROM USERS WHERE id_user = ?", [$user_id])->fetch();
+            if ($user) {
+                $expected = $user_id . '==' . $user['remember_token'] . sha1($user_id . 'ratonlaveurs');
+                if ($expected == $remember_token) {
+                    $this->connect($user);
+                    setcookie('remember', $remember_token, time() + 60 * 60 * 24 * 7);
+                } else {
+                    setcookie('remember', null, -1);
+                }
+            } else {
+                setcookie('remember', null, -1);
+            }
+        }
+    }
 
     // public function login($username, $password) {
     //     $user = $this->db->prepareReq("SELECT * FROM USERS WHERE USERNAME = ?", [$username], null, true);
@@ -132,15 +132,15 @@ class DBAuth
     }
 
 
-    // public function remember($db, $user_id)
-    // {
-    //     $remember_token = Str::random(250);
-    //     $db->queryReq("UPDATE USERS SET remember_token = ? WHERE id = ?", [$remember_token, $user_id]);
-    //     setcookie("remember", $user_id . "==" . $remember_token . sha1($user_id . 'ratonlaveurs'), time() + 60 * 60 * 24 * 7);
-    // }
+    public function remember($db, $user_id)
+    {
+        $remember_token = Str::random(250);
+        $db->queryReq("UPDATE USERS SET remember_token = ? WHERE id = ?", [$remember_token, $user_id]);
+        setcookie("remember", $user_id . "==" . $remember_token . sha1($user_id . 'ratonlaveurs'), time() + 60 * 60 * 24 * 7);
+    }
 
-    // public function logged()
-    // {
-    //     return isset($_SESSION["auth"]);
-    // }
+    public function logged()
+    {
+        return isset($_SESSION["auth"]);
+    }
 }

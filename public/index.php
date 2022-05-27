@@ -24,14 +24,27 @@ if ($page === 'home') {
     require ROOT . "/app/View/aboutMe.php";
 } elseif ($page === 'contact') {
     require ROOT . "/app/View/contact.php";
-} elseif ($page === 'login') {
+}
+// USERS 
+elseif ($page === 'login') {
     require ROOT . "/app/View/user/login.php";
-} elseif ($page === 'logout') {
+} elseif ($page === 'register') {
+    require ROOT . "/app/View/user/register.php";
+}  elseif ($page === 'confirm') {
+    require ROOT . "/app/View/user/confirm.php";
+} elseif ($page === 'forget') {
+    require ROOT . "/app/View/user/forget.php";
+} elseif ($page === 'reset') {
+    require ROOT . "/app/View/user/reset.php";
+}  elseif ($page === 'logout') {
     require ROOT . "/app/View/user/logout.php";
-} elseif ($page === 'adminPanel') {
-    require ROOT . "/app/View/admin/adminPanel.php";
 } elseif ($page === 'account') {
     require ROOT . "/app/View/user/account.php";
 }
+// ADMIN
+elseif ($page === 'adminPanel') {
+    require ROOT . "/app/View/admin/adminPanel.php";
+}
 $content = ob_get_clean();
+
 require ROOT . "/app/View/template/default.php";

@@ -5,7 +5,7 @@
     <div class="footerTop">
         <div class="footerLogoContainer">
             <p class="footerLogoText">clarisse ceccarelli</p>
-            <img class="footerLogo" src="../../../public/asset/pictures/logoLight.png" alt="logo footer clarisse ceccarelli photographe">
+            <img class="footerLogo" src="/asset/pictures/logoLight.png" alt="logo footer clarisse ceccarelli photographe">
             <p class="footerLogoText">photographe</p>
         </div>
         <div>
