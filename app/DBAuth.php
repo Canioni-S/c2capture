@@ -23,6 +23,23 @@ class DBAuth
         }
     }
 
+    public function login($username, $password, $remember = false)
+    {
+
+        // $user = $this->db->prepareReq("SELECT * FROM USERS WHERE USERNAME = ? AND confirmed_at IS NOT NULL", [$username], null, true);
+        $user = App::getInstance()->getTable("USERS")->findOne($username);
+        if ($user) {
+            if (password_verify($password, $user->PASSWORD)) {
+                $this->connect($user);
+                // if ($remember) {
+                //     $this->remember($this->db, $user->id);
+                // }
+                return $user;
+            }
+        }
+        return false;
+    }
+
     public function register($db, $username, $password, $email)
     {
         $password = password_hash($password, PASSWORD_BCRYPT);
@@ -38,7 +55,7 @@ class DBAuth
         $message = "<html>
                       <h2>Merci d'avoir créer un compte</h2><br>
                       <p>Afin de valider votre compte merci de cliquer sur ce lien</p><br>
-                      <a href='http://c2p.alwaysdata.net/index.php?p=confirm?id=$user_id&token=$token'>Confirmez votre compte</a><br>
+                      <a href='http://c2p.alwaysdata.net/index.php?p=confirm&id=$user_id&token=$token'>Confirmez votre compte</a><br>
                     </html>";
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=utf-8';
@@ -48,14 +65,32 @@ class DBAuth
 
     public function confirm($db, $user_id, $token)
     {
-        $user = $this->db->queryReq("SELECT * FROM USERS WHERE id_user = ?", [$user_id])->fetch();
+        $user = App::getInstance()->getTable("USERS")->findOneUserWithID($user_id);
+        // $user = $this->db->queryReq("SELECT * FROM USERS WHERE id_user = ?", [$user_id])->fetch();
 
-        if ($user && $user['CONFIRMATION_TOKEN'] == $token) {
-            $db->queryReq("UPDATE USERS SET CONFIRMATION_TOKEN = NULL, confirmed_at = NOW() WHERE id_user = ?", [$user_id]);
+        if ($user && $user->CONFIRMATION_TOKEN == $token) {
+            $db->prepareReq("UPDATE USERS SET CONFIRMATION_TOKEN = NULL, confirmed_at = NOW() WHERE id_user = ?", [$user_id]);
             $this->session->write('auth', $user);
             return true;
         }
         return false;
+    }
+
+    public function resetPassword($db, $email)
+    {
+        $user = $db->prepareReq("SELECT * FROM USERS WHERE email = ? AND confirmed_at IS NOT NULL", [$email], null, true);
+        if ($user) {
+            $reset_token = Str::random(60);
+            $db->prepareReq("UPDATE USERS SET reset_token = ?, reset_at = NOW() WHERE id_user = ?", [$reset_token, $user->ID_USER]);
+            mail($_POST['email'], 'Réinitiatilisation de votre mot de passe', "Afin de réinitialiser votre mot de passe merci de cliquer sur ce lien\n\nhttp://c2p.alwaysdata.net/index.php?p=reset&id={$user->ID_USER}&token=$reset_token");
+            return $user;
+        }
+        return false;
+    }
+
+    public function checkResetToken($db, $user_id, $token)
+    {
+        return $db->prepareReq("SELECT * FROM USERS WHERE id_user = ? AND reset_token IS NOT NULL AND reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)", [$user_id, $token]);
     }
 
     public function restrict()
@@ -108,22 +143,6 @@ class DBAuth
 
     // }
 
-    public function login($username, $password, $remember = false)
-    {
-
-        // $user = $this->db->prepareReq("SELECT * FROM USERS WHERE USERNAME = ? AND confirmed_at IS NOT NULL", [$username], null, true);
-        $user = App::getInstance()->getTable("USERS")->findOne($username);
-        if ($user) {
-            if (password_verify($password, $user->PASSWORD)) {
-                $this->connect($user);
-                // if ($remember) {
-                //     $this->remember($this->db, $user->id);
-                // }
-                return $user;
-            }
-        }
-        return false;
-    }
 
     public function logout()
     {

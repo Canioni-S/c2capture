@@ -4,7 +4,6 @@ use App\App;
 
 $title = "Liste des galeries";
 $extraCss = "home";
-$id_coll = htmlentities($_GET['id']);
 $collection = App::getInstance()->getTable('COLLECTIONS')->findOne(htmlentities($_GET['id']));
 ?>
 <div class="homePageContainer">

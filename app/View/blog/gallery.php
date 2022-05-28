@@ -2,9 +2,8 @@
 
 use App\App;
 
-// FETCH THE CONTENT OF A GALLERY TO ADD IN THE RIGHT TABLE
 $gallery = App::getInstance()->getTable('GALLERIES')->findOneGall(htmlentities($_GET['id']));
-// FETCH THE CONTENT OF A GALLERY (PICTURES) TO USE THE GALLERY'S INFORMATIONS IN THE VIEW
+
 $pictures = App::getInstance()->getTable('PICTURES')->getAllPicByGall($gallery->ID_GALL);
 
 $title =  $gallery->NAME_GALL;

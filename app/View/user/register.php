@@ -11,9 +11,9 @@ if (!empty($_POST)) {
     $db = App::getInstance()->getDB();
 
     $validator = new Validator($_POST);
-    
+
     $validator->isAlphaNum('username', "Votre pseudo n'est pas valide (alphanumérique)");
-    
+
     if ($validator->isValid()) {
         $validator->isUniq('username', $db, 'USERS', "Ce pseudo est déjà pris");
     }
@@ -30,7 +30,7 @@ if (!empty($_POST)) {
 
         App::getAuth()->register($db, $_POST['username'], $_POST['password'], $_POST['email']);
         Session::getInstance()->setFlash('success', "Un email de confirmation vous a été envoyé pour valider votre compte");
-        // App::redirect("index.php?p=login");
+        App::redirect("index.php?p=login");
     } else {
         $errors = $validator->getErrors();
     }

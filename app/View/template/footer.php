@@ -17,7 +17,7 @@
             <p>Copyright © 2022. Tous droits réservés Clarisse Ceccarelli photographie</p>
         </div>
         <div class="footerlink">
-            <p>C2.CAPTURE PHOTOGRAPHIE <a href="../legalMention.php">MENTIONS LEGALES </a><a href="../contact.php"> CONTACT</a></p>
+            <p>C2.CAPTURE PHOTOGRAPHIE <a href="index.php?p=legalMention">MENTIONS LEGALES </a><a href="index.php?p=contact"> CONTACT</a></p>
         </div>
     </div>
 </footer>
