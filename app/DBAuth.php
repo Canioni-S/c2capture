@@ -90,7 +90,7 @@ class DBAuth
 
     public function checkResetToken($db, $user_id, $token)
     {
-        return $db->prepareReq("SELECT * FROM USERS WHERE id_user = ? AND reset_token IS NOT NULL AND reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)", [$user_id, $token]);
+        return $db->prepareReq("SELECT * FROM USERS WHERE id_user = ? AND reset_token IS NOT NULL AND reset_token = ? AND reset_at > DATE_SUB(NOW(), INTERVAL 30 MINUTE)", [$user_id, $token],null , true);
     }
 
     public function restrict()
