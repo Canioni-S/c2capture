@@ -2,8 +2,6 @@
 
 use App\App;
 
-$title = "Acceuil";
-$extraCss = "home";
 ?>
 
 <div class="homePageContainer">
@@ -14,11 +12,10 @@ $extraCss = "home";
 
     <?php
 
-    foreach (App::getInstance()->getTable('COLLECTIONS')->findAll() as $collection) :
+    foreach ($collections as $collection) :
         $gallery = App::getInstance()->getTable('GALLERIES')->findFirstGall($collection->ID_COLL);
         $picture = App::getInstance()->getTable('PICTURES')->findFirstPic($gallery->ID_GALL);
     ?>
-
         <a class="collectionContainer" href="<?= $collection->getUrl() ?>">
             <img class="imgCollection" src="<?= $picture->LINK_PIC; ?>" alt="<?= $picture->NAME_PIC; ?>">
             <p class="nameCollection">Collection : '<?= $collection->NAME_COLL; ?>'</p>

@@ -13,9 +13,11 @@ use App\Session; ?>
     if (isset($extraCss)) {
         echo '<link rel="stylesheet" href="/css/' . $extraCss . '.css">';
     }
+    if (isset($title)) {
+        echo "<title>" .  $title . "</title>";
+    } 
     ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <title><?= $title; ?></title>
 </head>
 
 <body>

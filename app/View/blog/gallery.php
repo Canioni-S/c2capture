@@ -1,15 +1,3 @@
-<?php
-
-use App\App;
-
-$gallery = App::getInstance()->getTable('GALLERIES')->findOneGall(htmlentities($_GET['id']));
-
-$pictures = App::getInstance()->getTable('PICTURES')->getAllPicByGall($gallery->ID_GALL);
-
-$title =  $gallery->NAME_GALL;
-$extraCss = "gallery";
-?>
-
 <div class="pageContainer">
     <div class="titleContainer">
         <h1>GALERIE : ' <?= $gallery->NAME_GALL; ?> '</h1>
