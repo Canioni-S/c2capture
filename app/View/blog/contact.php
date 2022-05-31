@@ -18,10 +18,6 @@ if (!empty($_POST)) {
     exit();
 }
 ?>
-<?php
-$title = "Contact";
-$extraCss = "form";
-?>
 
 <div class="formPageContainer">
     <div class="formPage">

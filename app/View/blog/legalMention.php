@@ -1,9 +1,3 @@
-<?php
-$title = "Mentions legales";
-$extraCss = "legal";
-
-?>
-
 <div class="pageContainer">
     <div class="page">
         <h1>MENTIONS LEGALES</h1>

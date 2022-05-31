@@ -12,7 +12,7 @@ class CollectionController extends AppController
         $title = "Acceuil";
         $extraCss = "home";
 
-        $this->render("blog.home", compact("collections", "picture", "title", "extraCss"));
+        $this->render("blog.home", compact("collections", "title", "extraCss"));
     }
 
     public function showCollection()

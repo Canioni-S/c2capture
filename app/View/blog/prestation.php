@@ -1,8 +1,3 @@
-<?php
-$title = "Prestations";
-$extraCss = "prestation";
-?>
-
 <div class="pageContainer">
     <div class="prestationContainer">
         <h1 class="presTitle">decouvrez mes prestations</h1>

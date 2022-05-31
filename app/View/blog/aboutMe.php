@@ -1,8 +1,3 @@
-<?php
-$title = "Qui_suis-je?";
-$extraCss = "aboutMe";
-?>
-
 <div class="pageContainer">
     <div class="aMeContainer">
 
