@@ -9,6 +9,7 @@ use App\Validator;
 
 class UserController extends AppController
 {
+
     public function login()
     {
         $title = "Se connecter";
