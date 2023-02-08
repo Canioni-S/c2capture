@@ -7,7 +7,7 @@ require_once './Include/navbar.php'
 <div class="homePageContainer">
     
     <div class="titleContainer">
-        <h1>Bienvenu sur mon blog photo, vous trouverez ici différentes collections composées de plusieurs galeries de photos</h1>
+        <h1>Bienvenue sur mon blog photo, vous trouverez ici différentes collections composées de plusieurs galeries de photos</h1>
     </div>
 
     <?php

@@ -55,7 +55,7 @@ if (!empty($_POST)) {
         $message = "<html>
                         <h2>Merci d'avoir créer un compte</h2><br>
                         <p>Afin de valider votre compte merci de cliquer sur ce lien</p><br>
-                        <a href='http://c2p.alwaysdata.net/confirm.php?id=$user_id&token=$token'>Confirmez votre compte</a><br>
+                        <a href='http://c2capture.fr/confirm.php?id=$user_id&token=$token'>Confirmez votre compte</a><br>
                     </html>";
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=utf-8';
